@@ -1,1 +1,51 @@
-Notes
+Notes:
+
+
+Here’s a cleaned-up and summarized version of your notes for easier reference:
+
+
+
+### Fixing NTP (Time Sync) Issue on Proxmox
+
+**Problem:**
+
+* Couldn’t log in to Proxmox due to TOTP failure (server time was 2 minutes behind).
+
+**Troubleshooting Steps:**
+
+1. Verified NTP status with:
+
+   * `chronyc tracking`
+   * Output showed: `Leap Status: Not synced`
+2. Edited `/etc/chrony/chrony.conf`:
+
+   * Changed the time source line to:
+     `pool time.google.com iburst`
+3. Tried forcing time sync with:
+
+   * `chronyc makestep`
+4. Ultimately fixed the issue by manually correcting the **BIOS time**.
+
+**Result:**
+
+* Successfully logged into Proxmox.
+
+
+
+### Accessing TrueNAS
+
+**Issue:**
+
+* Couldn’t access TrueNAS via Proxmox, despite no firewall rules being set.
+
+**Fix:**
+
+* Reset firewall settings via CLI:
+
+  * Set firewall to `=0`
+
+**Result:**
+
+* Successfully accessed TrueNAS.
+
+
