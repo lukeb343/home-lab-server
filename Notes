@@ -1,10 +1,6 @@
 Notes:
 
 
-Here’s a cleaned-up and summarized version of your notes for easier reference:
-
-
-
 ### Fixing NTP (Time Sync) Issue on Proxmox
 
 **Problem:**
@@ -44,8 +40,8 @@ Here’s a cleaned-up and summarized version of your notes for easier reference:
 
   * Set firewall to `=0`
 
-**Result:**
 
-* Successfully accessed TrueNAS.
+
+
 
 
