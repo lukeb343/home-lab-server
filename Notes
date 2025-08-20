@@ -39,9 +39,6 @@ Notes:
 
 
 
-Great! Here’s a **cleaned-up, well-structured Markdown version** of your homelab notes — ready for GitHub (or any Markdown-supported environment like Obsidian, Notion, or even your code editor):
-
----
 
 #  Homelab Notes – Proxmox + Windows Domain Setup
 
@@ -160,7 +157,7 @@ Created in **Active Directory Users and Computers**:
 * Created security groups for departments:
 
   * `HR`, `IT`, `Accounting`
-* Added user:
+* Added user: John Smith
 
   * Username: `john.smith`
   * Password: `Password1!`
