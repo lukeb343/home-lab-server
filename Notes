@@ -43,11 +43,11 @@ Great! Here’s a **cleaned-up, well-structured Markdown version** of your homel
 
 ---
 
-# 🏡 Homelab Notes – Proxmox + Windows Domain Setup
+#  Homelab Notes – Proxmox + Windows Domain Setup
 
-## 📅 8/18 – Network Setup & VM Configuration
+##  Network Setup & VM Configuration
 
-### 🔧 Proxmox Network Configuration
+###  Proxmox Network Configuration
 
 * Added new bridge: `vmbr1`
 
@@ -59,7 +59,7 @@ Great! Here’s a **cleaned-up, well-structured Markdown version** of your homel
 
 ---
 
-### 💻 Windows 11 VM Setup
+###  Windows 11 VM Setup
 
 1. **Manual IP Configuration:**
 
@@ -87,7 +87,6 @@ Great! Here’s a **cleaned-up, well-structured Markdown version** of your homel
    * Win11 VM can now ping and talk to the Proxmox host
 
 ---
-SETUP AND CONFIGURATION TASKS FOR AD LAB
 ###  Windows Server 2025 VM Setup (Domain Controller)
 
 1. **NIC Configuration:**
