@@ -16,7 +16,7 @@ dpkg -i zabbix-release_7.0-1+debian12_all.deb' (Installs Zabbix Repo)
 -apt update
 
 3. Install Zabbix Server and Components
-- apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent
+- `apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-sql-scripts zabbix-agent`
 
 
 
