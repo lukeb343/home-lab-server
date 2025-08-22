@@ -1,17 +1,22 @@
+# Zabbix 7.0 Installation Guide (Proxmox LXC)
+
+This guide walks through the instasllation and setup of Zabbix 7.0 in a lightweight linux container
+
+---
 **SETUP**
 
--Download Debian Container Template
--Upload to Proxmox
+-Download Debian Container Template and upload it to proxmox
 
-1. *Create LXC container*
+# 1. Create LXC container
 - Configure resources
+  - Template: Debian 12
   - CPU: 1 core
   - RAM: 2-4GB
-  - Network: bridged to vmbr0
-  - Assign static IP: 192.168.0.55
+  - Network: bridged vmbr0
+  - Assign static IP: 192.168.0.55/24
 
 
- # 2. Install Zabbix Repo
+ # 2. Install Zabbix Repository
 - this adds Zabbix's software source to my package manager so I can use `apt` to install it
 - `wget https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-1+debian12_all.deb
 dpkg -i zabbix-release_7.0-1+debian12_all.deb`
@@ -51,6 +56,8 @@ dpkg -i zabbix-release_7.0-1+debian12_all.deb`
 
 # 6. Access Zabbix Web UI
 - navigate to http://192.168.0.55/zabbix
+
+Zabbix should now be accessible from the Web UI
 
 
 
