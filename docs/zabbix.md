@@ -3,7 +3,7 @@
 -Download Debian Container Template
 -Upload to Proxmox
 
-# 1. Create LXC container
+1. *Create LXC container*
 - Configure resources
   - CPU: 1 core
   - RAM: 2-4GB
