@@ -1,1 +1,10 @@
+Zabbix Monitoring Server
 
+I'm using Zabbix as a way to monitor devices/services in my homelab as well as devices on my network. 
+
+
+Summary:
+-Type: VM on Proxmox
+-OS: Debian 12
+-Zabbix Version:
+-IP: 192.168.0.55
