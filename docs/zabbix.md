@@ -7,7 +7,7 @@ This guide walks through the instasllation and setup of Zabbix 7.0 in a lightwei
 
 -Download Debian Container Template and upload it to proxmox
 
-# 1. Create LXC container
+## 1. Create LXC container
 - Configure resources
   - Template: Debian 12
   - CPU: 1 core
@@ -16,14 +16,14 @@ This guide walks through the instasllation and setup of Zabbix 7.0 in a lightwei
   - Assign static IP: 192.168.0.55/24
 
 
- # 2. Install Zabbix Repository
+ ## 2. Install Zabbix Repository
 - this adds Zabbix's software source to my package manager so I can use `apt` to install it
 - `wget https://repo.zabbix.com/zabbix/7.0/debian/pool/main/z/zabbix-release/zabbix-release_7.0-1+debian12_all.deb
 dpkg -i zabbix-release_7.0-1+debian12_all.deb`
 - `apt update`
 
 
-# 3. Install Zabbix Server and Components
+## 3. Install Zabbix Server and Components
 - installing all necessary componenets to run Zabbix
   - zabbix-server-sql: Core Zabbix server using MySQL/MariaDB
   - zabbix-frontend-php: Web UI
@@ -33,13 +33,13 @@ dpkg -i zabbix-release_7.0-1+debian12_all.deb`
 - These allow Zabbix to collect, store and monitor data
 
 
-# 4. Import Zabbix Database Schema
+## 4. Import Zabbix Database Schema
 - create database user Zabbix with password and import schema
 - `zcat /usr/share/doc/zabbix-sql-scripts/mysql/create.sql.gz | mysql -u zabbix -p`
 - Zabbix requires a specific database structure to function, this imports the required tables and initial configuration for the DB
 
 
-# 4a. Configure Zabbix Server
+## 4a. Configure Zabbix Server
 - edit config file to set DB password
 - `sudo nano /etc/zabbix/zabbix_server.conf`
 -  "Set DBPassword=your_password"
@@ -48,13 +48,13 @@ dpkg -i zabbix-release_7.0-1+debian12_all.deb`
   - Make sure line DBPassword is not written out with a # at the beginning
 
 
-# 5. Start/Enable Services
+## 5. Start/Enable Services
 - `sudo systemctl restart mariadb zabbix-server zabbix-agent apache2`
 - `sudo systemctl enable mariadb zabbix-server zabbix-agent apache2`
 - `systemctl restart zabbix-server zabbix-agent apache2`
 
 
-# 6. Access Zabbix Web UI
+## 6. Access Zabbix Web UI
 - navigate to http://192.168.0.55/zabbix
 
 Zabbix should now be accessible from the Web UI
