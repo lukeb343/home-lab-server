@@ -1,7 +1,7 @@
 **SETUP**
 
-Download Debian Container Template
-Upload to Proxmox
+-Download Debian Container Template
+-Upload to Proxmox
 
 1. Create LXC container
 - Configure resources
@@ -31,7 +31,7 @@ dpkg -i zabbix-release_7.0-1+debian12_all.deb`
 4. Import Zabbix Database Schema
 - create database user Zabbix with password and import schema
 - `zcat /usr/share/doc/zabbix-sql-scripts/mysql/create.sql.gz | mysql -u zabbix -p`
-- Zabbix requires a specific database structure to function, this imports the reqauired tables and initial configuration for the DB
+- Zabbix requires a specific database structure to function, this imports the required tables and initial configuration for the DB
 
 
 4a. Configure Zabbix Server
