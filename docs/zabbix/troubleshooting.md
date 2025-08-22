@@ -1,1 +1,174 @@
+#  Zabbix Installation Troubleshooting Guide
 
+This document outlines common issues encountered during the installation of Zabbix 7.0 in a Debian LXC container, along with their solutions.
+
+---
+
+## Problem 1: Held Broken Packages on Ubuntu
+
+**Error Message:**
+Unable to correct problems, you have held broken packages
+
+markdown
+Copy code
+
+**Cause:**
+- The Zabbix installation script required dependencies that weren't available in the Ubuntu LXC container.
+- These packages are **not included** in the base Ubuntu CT template from Proxmox.
+
+**Solution:**
+- Switch to **Debian 12**, which is officially recommended and compatible with Zabbix.
+- Restart the installation using the Debian template.
+
+---
+
+##  Problem 2: “System Locale = Fail” on Web Installer
+
+**Symptoms:**
+- Zabbix pre-installation check fails on **System Locale**.
+- Running `locale` shows variables set to `C` and displays errors like:
+LC_ALL = (unset)
+LANG = C
+
+lua
+Copy code
+
+###  Troubleshooting Steps:
+
+1. **Check service statuses:**
+ ```bash
+ systemctl status zabbix-server
+ systemctl status zabbix-agent
+ systemctl status apache2
+ systemctl status php8.2-fpm  # May not be installed
+Check if php-fpm is installed:
+
+bash
+Copy code
+dpkg -l | grep php | grep fpm
+If missing, install and start it:
+
+bash
+Copy code
+sudo apt install php8.2-fpm
+sudo systemctl start php8.2-fpm
+Check available locales:
+
+bash
+Copy code
+locale -a
+If en_US.UTF-8 is not listed, generate it:
+
+bash
+Copy code
+sudo locale-gen en_US.UTF-8
+Manually set default locale:
+Edit:
+
+bash
+Copy code
+sudo nano /etc/default/locale
+Add or edit:
+
+ini
+Copy code
+LANG="en_US.UTF-8"
+LC_ALL="en_US.UTF-8"
+Reconfigure locales interactively:
+
+bash
+Copy code
+sudo dpkg-reconfigure locales
+Select en_US.UTF-8
+
+Save and reboot or re-login if necessary
+
+Final Fix:
+
+Ensure that en_US.UTF-8 is fully installed and set as the system-wide default instead of C.
+
+ Problem 3: "Unable to Determine Current Zabbix Database Version"
+Error Message:
+
+pgsql
+Copy code
+Unable to determine current Zabbix database version: the table “dbversion” was not found
+Cause:
+
+Zabbix database schema was not properly imported.
+
+Schema files were missing from expected locations.
+
+ Solution:
+Download Zabbix schema manually:
+
+bash
+Copy code
+wget https://cdn.zabbix.com/zabbix/sources/stable/7.0/zabbix-7.0.3.tar.gz
+tar -xvzf zabbix-7.0.3.tar.gz
+cd zabbix-7.0.3/database/mysql
+Create Zabbix database and import schema:
+
+bash
+Copy code
+mysql -u zabbix -p zabbix < schema.sql
+Restart Zabbix services after import:
+
+bash
+Copy code
+sudo systemctl restart zabbix-server
+
+## Problem 4: Zabbix Dashboard Says “Zabbix Server is Not Running”
+Symptom:
+
+Dashboard error:
+
+pgsql
+Copy code
+Zabbix server is not running
+But zabbix-server status shows as active:
+
+bash
+Copy code
+systemctl status zabbix-server
+Cause:
+
+The DB password in the Zabbix config file was commented out, so the server couldn’t connect to the database.
+## Solution:
+Open Zabbix server config:
+
+bash
+Copy code
+sudo nano /etc/zabbix/zabbix_server.conf
+Find this line:
+
+bash
+Copy code
+# DBPassword=mypassword
+Remove the # to uncomment:
+
+bash
+Copy code
+DBPassword=mypassword
+Save the file and restart Zabbix:
+
+bash
+Copy code
+sudo systemctl restart zabbix-server
+✅ Summary of Fixes
+Problem	Solution Summary
+Held broken packages (Ubuntu)	Switch to Debian 12
+Locale = C / Locale error	Generate and set en_US.UTF-8 system-wide
+Missing dbversion / schema	Download schema and import it manually
+Zabbix server "not running" error	Uncomment DBPassword= in config file
+
+📝 Tip: Always check:
+
+Logs: /var/log/zabbix/zabbix_server.log
+
+Service status via systemctl
+
+That required services like mariadb, php-fpm, and apache2 are running
+
+yaml
+Copy code
