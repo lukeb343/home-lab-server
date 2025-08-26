@@ -1,7 +1,6 @@
 # Homelab Setup
 
 This repository documents my personal homelab environment — a space where I test, learn, and experiment with various technologies, tools, and infrastructure setups. It serves as both a portfolio and a knowledge base for projects I’ve built or am currently working on.
----
 
 ## Hardware Overview
 
