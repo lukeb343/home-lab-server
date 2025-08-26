@@ -1,1 +1,160 @@
 
+Setup/Installation Notes:
+
+
+#  Homelab Notes – Proxmox + Windows Domain Setup
+
+##  Network Setup & VM Configuration
+
+###  Proxmox Network Configuration
+
+* Added new bridge: `vmbr1`
+
+  * IP: `10.10.0.254/24`
+* In each VM:
+
+  * Added a new network device `net1`
+  * Set it to use `vmbr1`
+
+---
+
+###  Windows 11 VM Setup
+
+1. **Manual IP Configuration:**
+
+   * IP: `10.10.0.1`
+   * Subnet: `255.255.255.0`
+   * Gateway: `10.10.0.254`
+
+2. **Drivers:**
+
+   * Mounted VirtIO ISO
+   * Manually installed drivers via Device Manager
+
+3. **Connectivity Issues:**
+
+   * Could not ping `10.10.0.254` (Proxmox host)
+   * Could ping `10.10.0.1` (self) → NIC is working
+   * Disabled other adapters (e.g., net0) in both Windows and Proxmox → Still not working
+   * **Solution:** Disabled Proxmox firewall
+
+     * On VM NIC: `firewall=0`
+     * Also disabled node-level firewall
+
+4. **Result:**
+
+   * Win11 VM can now ping and talk to the Proxmox host
+
+---
+###  Windows Server 2025 VM Setup (Domain Controller)
+
+1. **NIC Configuration:**
+
+   * Connected to `vmbr1`
+   * Updated NIC drivers:
+
+     * `NetKVM-2k25-amd64` from VirtIO ISO
+   * Assigned static IP:
+
+     * IP: `10.10.0.10`
+     * Mask: `255.255.255.0`
+     * Gateway: `10.10.0.254`
+     * DNS: `10.10.0.10`
+
+2. **Verified connectivity:**
+
+   * Successfully pinged Proxmox host
+
+---
+
+### Active Directory Domain Services (AD DS)
+
+* Installed roles:
+
+  * AD DS, DNS, DHCP
+* Promoted server to Domain Controller:
+
+  * New forest: `company.local`
+  * DSRM password: `Strongpassword1!`
+
+---
+
+###  Testing Domain Functionality (Win11)
+
+1. Set DNS to `10.10.0.10` (DC IP)
+2. In PowerShell:
+
+   * `ping company.local` → success
+3. Joined domain:
+
+   * Domain: `company.local`
+   * User: `lukevm1`
+   * Authenticated using DC admin credentials
+4. Renamed computer to:
+
+   * `PC-01`
+   * Full name: `PC-01.company.local`
+
+---
+
+## Domain Configuration & Group Policies
+
+### Organizational Units (OUs)
+
+Created in **Active Directory Users and Computers**:
+
+* `USA`, `Europe`, `Asia`
+
+  * Each contains:
+
+    * `Users`
+    * `Computers`
+    * `Servers`
+
+---
+
+###  Groups and Users
+
+* Location: `USA > Users`
+* Created security groups for departments:
+
+  * `HR`, `IT`, `Accounting`
+* Added user: John Smith
+
+  * Username: `john.smith`
+  * Password: `Password1!`
+  * Added to: `IT` group
+
+---
+
+###  Group Policy Configuration (GPMC)
+
+#### 1. **Password Policy**
+
+* Location:
+  `Computer Configuration > Policies`
+* Settings:
+
+  * Minimum length
+  * Complexity requirements
+  * Password age
+
+#### 2. **Account Lockout Policy**
+
+* Lockout after 5 failed attempts
+* Lockout duration: 10 minutes
+
+#### 3. **Drive Mapping Policy**
+
+* GPO Name: `Drive Mapping`
+* Location:
+  `User Configuration > Preferences > Windows Settings > Drive Maps`
+
+#### 4. **Desktop Wallpaper**
+
+* User Configuration GPO to set a custom wallpaper
+
+#### 5. **Restrict Control Panel Access**
+
+* User GPO to disable access to Control Panel
+
