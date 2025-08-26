@@ -28,6 +28,19 @@ I use **Proxmox VE** installed directly on bare metal. It provides a clean, web-
 
 ---
 
+## Services
+Some of the key services running in my homelab:
+
+- Virtualization/Containerization: Proxmox, LXC containers, 
+- Infrastructure Management: None currently, looking to incorporate Anisible
+- Monitoring & Logging: Zabbix, Grafana*
+- Networking/Security: Pi-hole
+- Self-Hosted Services: TrueNAS
+
+Looking to add, pfSense, Grafana, Wireguard, incorporating Anisible/or Terraform
+
+---
+
 ##  Storage Setup (TrueNAS)
 
 **TrueNAS** is deployed as a virtual machine within Proxmox, functioning as a NAS for managing file storage, SMB shares, and future ZFS experiments.
@@ -41,18 +54,18 @@ I use **Proxmox VE** installed directly on bare metal. It provides a clean, web-
 
 ## Virtual Machines
 
-I run several virtual machines for various use cases:
-
 | VM Name       | OS            | Purpose                     | Access Method        |
 |---------------|---------------|-----------------------------|----------------------|
 | `truenas`     | TrueNAS Scale | File storage and sharing    | CLI/Web UI           |
 | `Windows 2025`| WinServer 2025| Domain Controller           | RDP from main PC     |
 | `Win11`       | Windows 11 Pro| Test Enviroment/ domain join| SSH / Web UI         |
 
-I remote into these VMs using SSH or the Web UI from my main PC for administration and testing.
+
 
 ---
-
+## Repo Stucture
+/docs # notes, setup guides, troubleshooting, screenshots
+/
 ## Purpose
 
 This homelab serves as a personal learning environment for:
