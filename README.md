@@ -2,6 +2,12 @@
 
 This repository documents my personal homelab environment — a space where I test, learn, and experiment with various technologies, tools, and infrastructure setups. It serves as both a portfolio and a knowledge base for projects I’ve built or am currently working on.
 
+## Goals
+- Build hands-on experience with IT infrastructure and DevOps tools.
+- Automate deployments and practice Infrastructure-as-Code (IaC).
+- Explore self-hosted services and system administration.
+- Learn networking, virtualization, and security concepts in a practical way.
+
 ## Hardware Overview
 
 **Host Machine Specs:**
