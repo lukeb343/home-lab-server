@@ -1,7 +1,6 @@
 # Homelab Setup
 
-Welcome to my Homelab documentation! This repository outlines my current self-hosted setup, including the hardware I use, how I manage virtualization with Proxmox, and how I utilize TrueNAS and various VMs for personal and educational projects.
-
+This repository documents my personal homelab environment — a space where I test, learn, and experiment with various technologies, tools, and infrastructure setups. It serves as both a portfolio and a knowledge base for projects I’ve built or am currently working on.
 ---
 
 ## Hardware Overview
